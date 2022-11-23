@@ -1,6 +1,8 @@
 const axios = require('axios')
 const url = require("url")
-const host = process.env.ENV === "dev" ? process.env.DEV_HOST : process.env.PROD_HOST
+
+const host = process.env.HOST
+
 module.exports = async (req, res) => {
   console.log(req.query.code, process.env.DISCORD_CLIENT_ID, process.env.DISCORD_CLIENT_SECRET, host)
   const { code } = req.query
