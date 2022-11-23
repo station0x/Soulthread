@@ -1,5 +1,5 @@
-// import Vue from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 // import store from '../store'
 // import CONSTANTS from '../../constants'
 
@@ -12,12 +12,15 @@ const Verify = () => import('../views/Verify.vue')
 
 // const Dashboard = () => import('@/views/admin/Dashboard.vue')
 
+Vue.use(VueRouter)
+
 const TITLE = ' | Soulthread'
 
 const routes = [
     { path: '/', redirect: { name: 'Onboarding' }},
     // { path: '*', redirect: { name: 'Onboarding' }},
-    { path: '/welcome', component: Onboarding, name: 'Onboarding', meta: { requiresLogin: true, title: 'Welcome' } },
+    { path: '/welcome/user?', component: Onboarding, name: 'Onboarding', meta: { requiresLogin: true, title: 'Welcome' } },
+    { path: '/portal', component: Portal, name: 'Portal', meta: { requiresLogin: true, title: 'Portal' } },
 //   { path: '/login/:redirect?:key?', component: Login, name: 'Login', meta: { title: 'Login' } },
 
 //   { path: '/home', component: Home, name: 'Home', meta: { requiresLogin: true, title: 'Home' } },
@@ -30,10 +33,10 @@ const routes = [
 //   { path: '/dashboard', component: Dashboard, name: 'Dashboard', meta: { requiresAdmin: true, title: 'Admin Dashboard' } },
 ]
 
-const router = createRouter({
-    history: createWebHistory(), 
+const router = new VueRouter({
     routes,
-})
+    mode: 'history'
+  })
 
 // router.beforeEach((to, from, next) => {
 //   // if(to.matched.some(record => record.meta.requiresLogin) && !store.state.address) next({ name: 'Login' })

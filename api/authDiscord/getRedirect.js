@@ -1,5 +1,6 @@
 const axios = require('axios')
 const url = require("url")
+const codec = require('json-url')('lzw')
 
 const host = process.env.HOST
 
@@ -32,14 +33,58 @@ module.exports = async (req, res) => {
             'Accept-Encoding': 'gzip: false' // wow, if not present we recieve magical spells
           }
         })
-        const { id, username, avatar } = userResponse.data
-        const isRegistered = await axios.get(`${host}/api/moderators/isRegistered`, {
+        let { id, username, avatar } = userResponse.data
+        if(!avatar) avatar = 'https://ia803204.us.archive.org/4/items/discordprofilepictures/discordblue.png' //default avatar
+        let isRegistered = (await axios.get(`${host}/api/moderators/isRegistered`, {
           params: {
-            id
+            id,
+            username,
+            avatar
           }
-        })
-        // console.log(isRegistered.response.data)
-        res.status(200).json({res: userResponse.data})
+        })).data.success
+        // returning user
+        if(isRegistered) {
+          codec.compress({
+            id,
+            username,
+            avatar,
+            newUser: false
+          }).then(userURL => {
+            const redirectURL = url.format({
+              host,
+              pathname: '/portal/' + userURL
+            }).toString()
+            res.redirect(redirectURL)
+          })
+          // res.status(200).json({ newUser: false, success: true, user: id, username, avatar })
+        } else {
+          // new user
+          try {
+            await axios.get(`${host}/api/moderators/registerMod`, {
+              params: {
+                id,
+                username,
+                avatar
+              }
+            })
+            codec.compress({
+              id,
+              username,
+              avatar,
+              newUser: true
+            }).then(userURL => {
+              const redirectURL = url.format({
+                host,
+                pathname: '/welcome/' + userURL
+              }).toString()
+              res.redirect(redirectURL)
+            })
+            // res.status(200).json({ newUser: true, success: true, user: {id, username, avatar} });
+          } catch(err) {
+            console.log(err)
+            throw new Error('Error occured during registration')
+          }
+        }
       } catch(err) {
         console.log(err)
         throw new Error(err)
@@ -50,7 +95,7 @@ module.exports = async (req, res) => {
       return true
     }
   } else {
-    console.log(res.data)
+    // console.log(res.data)
     res.status(200).json({success: true }) 
   }
   res.status(500)
