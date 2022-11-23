@@ -1,56 +1,19 @@
 <template>
     <section class="px-10 py-16">
         <div class="py-8 bg-white dark:bg-gray-900 lg:py-0">
-            <div class="flex">
-                <div class="hidden w-full max-w-md p-12 lg:max-h-fit lg:block bg-primary-600">
+            <div class="flex h-[600px]">
+                <div class="hidden w-full max-w-md p-12 lg:max-h-fit lg:block bg-neutral-800">
                     <div class="flex items-center mb-8 space-x-4">
                         <a href="#" class="flex items-center text-2xl font-semibold text-white">
-                            <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" />
-                            Flowbite    
+                            <img class="" src="../assets/logo.svg" />
                         </a>
-                        <a href="#" class="inline-flex items-center text-sm font-medium text-primary-100 hover:text-white">
-                            <svg class="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            Go back
-                        </a>
-                    </div>
-                    <div class="block p-8 text-white rounded-lg bg-primary-500">
-                        <h3 class="mb-1 text-2xl font-semibold">Your selected plan</h3>
-                        <p class="mb-4 font-light text-primary-100 sm:text-lg">30-day free trial</p>
-                        <!-- List -->
-                        <ul role="list" class="space-y-4 text-left">
-                            <li class="flex items-center space-x-3">
-                                <!-- Icon -->
-                                <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                <span>Individual configuration</span>
-                            </li>
-                            <li class="flex items-center space-x-3">
-                                <!-- Icon -->
-                                <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                <span>No setup, or hidden fees</span>
-                            </li>
-                            <li class="flex items-center space-x-3">
-                                <!-- Icon -->
-                                <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                <span>Team size: <span class="font-semibold">1 developer</span></span>
-                            </li>
-                            <li class="flex items-center space-x-3">
-                                <!-- Icon -->
-                                <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                <span>Premium support: <span class="font-semibold">6 months</span></span>
-                            </li>
-                            <li class="flex items-center space-x-3">
-                                <!-- Icon -->
-                                <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                <span>Free updates: <span class="font-semibold">6 months</span></span>
-                            </li>
-                        </ul>
                     </div>
                 </div> 
                 <div class="flex items-center mx-auto md:w-[42rem] px-4 md:px-8 xl:px-0">
                     <div class="w-full">
                         <div class="flex items-center justify-center mb-8 space-x-4 lg:hidden">
                             <a href="#" class="flex items-center text-2xl font-semibold">
-                                <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" />
+                                <img class="w-8 h-8 mr-2" src="../assets/logo.svg" />
                                 <span class="text-gray-900 dark:text-white">Flowbite</span>
                             </a>
                         </div>
@@ -77,10 +40,28 @@
                         <svg class="w-12 h-12 mb-4 text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                         <h1 class="mb-2 text-2xl font-extrabold tracking-tight text-gray-900 leding-tight dark:text-white">Verified</h1>
                         <p class="mb-4 font-light text-gray-500 dark:text-gray-400 md:mb-6">You have successfully verified your account.</p>
-                        <a href="#" class="block w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 sm:py-3.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Log in to your Account</a>
+                        <a @click="authDiscord" class="block w-full text-white bg-neutral-600 hover:bg-neutral-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 sm:py-3.5 text-center dark:bg-neutral-600 dark:hover:bg-neutral-700 dark:focus:ring-primary-800">
+                            Connect Discord</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </template>
+
+<script>
+
+export default {
+    data(){
+        return {
+
+        }
+    },
+    methods: {
+        authDiscord() {
+            let endpoint = import.meta.env.MODE  === 'development' ? 'http%3A%2F%2F127.0.0.1:3000' : 'https%3A%2F%2Fsoulthread.xyz'
+            window.open(`https://discord.com/api/oauth2/authorize?client_id=1044688147902120089&redirect_uri=${endpoint}%2Fapi%2FauthDiscord%2FgetRedirect&response_type=code&scope=identify%20guilds`, '_target')
+        }
+    }
+}
+</script>
