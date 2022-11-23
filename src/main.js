@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 // import store from './store'
@@ -8,10 +8,12 @@ import router from './router'
 import './style.css'
 import 'flowbite'
 
-// dark mode
-document.documentElement.classList.add('dark')
+Vue.prototype.ethereum = window.ethereum
 
-const app = createApp(App)
-app.use(router)
-// app.use(store)
-app.mount('#app')
+// dark mode
+// document.documentElement.classList.add('dark')
+
+new Vue({
+    router,
+    render: (h) => h(App)
+}).$mount('#app')
