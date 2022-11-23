@@ -1,11 +1,9 @@
 "use strict";
 // Import the dependency.
 const clientPromise = require('../../api-utils/mongo-client');
+const axios = require('axios')
 
-// function validate(id) {
-//     if(!id) throw new Error('User id not provided')
-//     return true
-// }
+const host = process.env.HOST
 
 module.exports = async (req, res) => {
     const id = req.query.id
@@ -17,5 +15,14 @@ module.exports = async (req, res) => {
     const Mods = db.collection("moderators")
     const ModDoc = (await Mods.find({id}).limit(1).toArray())[0]
     const success = ModDoc === undefined ? false : true
-    res.status(200).json({ success });
+    if(sucess) {
+        res.status(200).json({ success });
+    } else {
+        await axios.get(`${host}/api/moderators/registerMod`, {
+            params: {
+              id
+            }
+          })
+    }
+    
 }
