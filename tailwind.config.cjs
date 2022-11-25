@@ -7,7 +7,19 @@ module.exports = {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: 
+      ['Inter', 'sans-serif'],
+      'Allenoire': ['Allenoire', 'sans-serif']
+    },
+    extend: {
+      colors: {
+        st: {
+          green: '#01E898',
+          sky: '#13B1E8'
+        }
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin')

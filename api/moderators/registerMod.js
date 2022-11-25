@@ -4,7 +4,7 @@ const clientPromise = require('../../api-utils/mongo-client');
 const host = process.env.HOST
 
 module.exports = async (req, res) => {
-  let { id, username, avatar } = req.query
+  let { id, username, avatar, access_token, refresh_token } = req.query
   if(!id) throw new Error('User id not provided')
   const client = await clientPromise;
   const db = client.db()
@@ -18,7 +18,9 @@ module.exports = async (req, res) => {
   await Mods.insertOne({
     id,
     username,
-    avatar
+    avatar,
+    access_token,
+    refresh_token
   })
   res.status(200).json({ success: true, id, username, avatar });
 }

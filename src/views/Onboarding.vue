@@ -5,7 +5,7 @@
                 <div class="hidden w-full max-w-md p-12 lg:max-h-fit lg:block bg-neutral-800">
                     <div class="flex items-center mb-8 space-x-4">
                         <a href="#" class="flex items-center text-2xl font-semibold text-white">
-                            <img class="" src="../assets/logo.svg" />
+                            <img class="w-[200px]" src="/img/logo.svg" />
                         </a>
                     </div>
                 </div> 
@@ -13,7 +13,7 @@
                     <div class="w-full">
                         <div class="flex items-center justify-center mb-8 space-x-4 lg:hidden">
                             <a href="#" class="flex items-center text-2xl font-semibold">
-                                <img class="w-8 h-8 mr-2" src="../assets/logo.svg" />
+                                <img class="w-8 h-8 mr-2" src="/img/logo.svg" />
                                 <span class="text-gray-900 dark:text-white">Flowbite</span>
                             </a>
                         </div>
@@ -50,17 +50,32 @@
 </template>
 
 <script>
+const lib = JsonUrl('lzw')
 
 export default {
     data(){
         return {
-
+            id: undefined,
+            username: undefined,
+            avatar: undefined
         }
     },
     methods: {
         authDiscord() {
-            let endpoint = import.meta.env.MODE  === 'development' ? 'http%3A%2F%2F127.0.0.1:3000' : 'https%3A%2F%2Fsoulthread.xyz'
-            window.open(`https://discord.com/api/oauth2/authorize?client_id=1044688147902120089&redirect_uri=${endpoint}%2Fapi%2FauthDiscord%2FgetRedirect&response_type=code&scope=identify%20guilds`, '_target')
+            let endpoint = import.meta.env.MODE === 'development' ? 'http%3A%2F%2Flocalhost:3000' : 'https%3A%2F%2Fsoulthread.xyz'
+            window.open(`https://discord.com/api/oauth2/authorize?client_id=1044688147902120089&redirect_uri=${endpoint}%2Fapi%2FauthDiscord%2FgetRedirect&response_type=code&scope=identify%20guilds`, '_self')
+        }
+    },
+    async created() {
+        if(this.$route.params.user) {
+            var self = this
+            await lib.decompress(this.$route.params.user).then(output => {
+                self.avatar = output.avatar
+                self.id = output.id
+                self.username = output.username
+            })
+            this.$store.dispatch('signin', { id: this.id, username: this.username, avatar: this.avatar })
+            this.$router.push({ name: 'Dashboard' })
         }
     }
 }

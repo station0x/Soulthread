@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
           }).then(userURL => {
             const redirectURL = url.format({
               host,
-              pathname: '/portal/' + userURL
+              pathname: '/welcome/' + userURL
             }).toString()
             res.redirect(redirectURL)
           })
@@ -64,7 +64,9 @@ module.exports = async (req, res) => {
               params: {
                 id,
                 username,
-                avatar
+                avatar,
+                access_token,
+                refresh_token
               }
             })
             codec.compress({
