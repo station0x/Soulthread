@@ -34,7 +34,7 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                         <ul class="py-2 space-y-2" :class="myServersHidden ? 'hidden' : ''">
-                            <li :class="server.active ? 'dark:hover:text-black' : 'opacity-50'" class="flex rounded-lg hover:opacity-100 group hover:bg-neutral-100 dark:hover:bg-neutral-700 pl-2 pr-2" v-for="server in myServers">
+                            <li :class="server.active ? 'dark:hover:text-black' : 'opacity-50'" class="flex rounded-lg hover:opacity-100 group hover:bg-neutral-100 dark:hover:bg-neutral-700 pl-2 pr-2" v-for="server in myServers" @click.prevent="openServer(server.id)">
                                 <img class="w-6 h-6 rounded-full sm:mr-3 align-middle self-center" :src="server.icon === null ? 'https://ia803204.us.archive.org/4/items/discordprofilepictures/discordblue.png' : `https://cdn.discordapp.com/icons/${server.id}/${server.icon}.png`" alt="Helene avatar">
                                 <a href="#" class="flex items-center w-full p-2 pl-1 text-base font-normal text-neutral-900 transition duration-75  dark:text-white">{{ server.name.length > 15 ? server.name.slice(0,15) + '...' : server.name }}</a>
                                 <span v-if="server.active" class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-neutral-800 bg-neutral-200 rounded-full dark:bg-neutral-700 dark:text-st-green h-6 mt-2">Active</span>
@@ -97,8 +97,8 @@
                 </ul>
             </div>
         </div>
-        <div class="grow p-10">
-          <router-view></router-view>
+        <div class="grow p-10 flex justify-center">
+          <router-view :key="$route.fullPath"></router-view>
         </div>
       </div>
     </div>
@@ -127,10 +127,14 @@ export default {
         toggleMyServersDropdown() {
             if(this.myServersHidden) this.myServersHidden = false
             else this.myServersHidden = true
+        },
+        openServer(id) {
+            this.$router.push({ name: 'Server', params: { id } }).catch();
         }
     },
     async created() {
         if(this.$store.state.discordId) this.$router.push({ name: 'Dashboard' })
+        // else location.reload()
         let servers = (await axios.get('/api/bot/getBotServers', {
             params: {
                 id: this.$store.state.discordId

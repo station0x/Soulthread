@@ -20,7 +20,8 @@ module.exports = async (req, res) => {
     username,
     avatar,
     access_token,
-    refresh_token
+    refresh_token,
+    servers: {}
   })
   res.status(200).json({ success: true, id, username, avatar });
 }
