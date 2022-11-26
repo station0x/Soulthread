@@ -1,0 +1,17 @@
+{
+    "chainTypes": [
+        0
+    ],
+    "tokenStandards": [
+        0
+    ],
+    "ENUM": {
+        "chains": {
+            "0": "Fantom"
+            
+        },
+        "standards": {
+            "0": "ERC-20"
+        }
+    }
+}

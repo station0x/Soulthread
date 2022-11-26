@@ -12,6 +12,13 @@ Vue.prototype.ethereum = window.ethereum
 // dark mode
 // document.documentElement.classList.add('dark')
 
+// constants
+import prodCONSTANTS from '../constants/prod.json'
+import devCONSTANTS from '../constants/dev.json'
+const CONSTANTS = import.meta.env.VITE_APP_ENV === "prod" ? prodCONSTANTS : devCONSTANTS
+console.log(CONSTANTS)
+Vue.prototype.$CONSTANTS = CONSTANTS
+
 new Vue({
     router,
     store,
