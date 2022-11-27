@@ -133,14 +133,19 @@ export default {
         }
     },
     async created() {
-        if(this.$store.state.discordId) this.$router.push({ name: 'Dashboard' })
-        // else location.reload()
-        let servers = (await axios.get('/api/bot/getBotServers', {
-            params: {
-                id: this.$store.state.discordId
+        setTimeout(async () => {
+            if(this.$router.history.current.name !== 'Verify') {
+                if(this.$store.state.discordId) this.$router.push({ name: 'Dashboard' })
+                let servers = (await axios.get('/api/bot/getBotServers', {
+                    params: {
+                        id: this.$store.state.discordId
+                    }
+                })).data.servers[0]
+                this.$store.commit('setServers', arraySort(servers, 'active', {reverse: true}))
             }
-        })).data.servers[0]
-        this.$store.commit('setServers', arraySort(servers, 'active', {reverse: true}))
+        }, 
+        300)
+
     },
     computed: {
         ...mapGetters({
