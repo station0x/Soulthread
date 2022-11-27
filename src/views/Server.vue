@@ -190,7 +190,7 @@
                                 <input :value="criteria.contractAddress" @change="(e) => {criteria.contractAddress = e.target.value }" type="text" name="text" id="text" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
                             </div>
                         </div>
-                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-1">
                             <div>
                                 <label for="user-permissions" class="inline-flex items-center mb-2 text-sm font-medium text-neutral-900 dark:text-white">
                                     Minimum Amount
@@ -205,13 +205,6 @@
                                 </label>
                                 <input :value="criteria.minAmount" @change="(e) => {criteria.minAmount = e.target.value }"  type="number" name="text" id="text" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
                             </div>
-                            <div>
-                                <label for="user-permissions" class="inline-flex items-center mb-2 text-sm font-medium text-neutral-900 dark:text-white">
-                                    Maximum Amount
-
-                                </label>
-                                <input :value="criteria.maxAmount" @change="(e) => {criteria.maxAmount = e.target.value }"  type="number" name="text" id="text" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
-                            </div>
                         </div>
                         <div class="grid gap-4 mb-4 sm:grid-cols-1">
                             <div>
@@ -221,7 +214,7 @@
                                 <input :value="criteria.description" @change="(e) => {criteria.description = e.target.value }"  type="text" name="text" id="text" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
                             </div>
                         </div>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-4 mt-10">
                             <button @click.prevent="addCriteria" :class="criteriaValid ? 'opacity: 100':'opacity: 50'" class="text-black bg-st-green hover:bg-st-green focus:ring-4 focus:outline-none focus:ring-st-green font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-tr from-st-green to-st-sky dark:hover:bg-st-green dark:focus:ring-st-green">
                                 <svg v-if="btnLoader"  aria-hidden="true" role="status" class="inline mr-2 -mt-[0.5px] w-4 h-4 text-black animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="gray"/>
@@ -243,6 +236,7 @@ import SecondaryBtnVue from '@/components/SecondaryBtn.vue'
 import Loader from '@/components/Loader.vue'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
+import arraySort from 'array-sort'
 export default {
     data() { 
         return {
@@ -254,7 +248,6 @@ export default {
                 tokenStandard: 0,
                 contractAddress: 'hello',
                 minAmount: 0,
-                maxAmount: 0,
                 description: 'gfgf',
             },
             guildCriteria: undefined,
@@ -324,7 +317,10 @@ export default {
         },
         criteriaArray() {
             return Object.keys(this.guildCriteria)
-        }
+        },
+        // sortedRoles() {
+        //     return arraySort(servers, 'active', {reverse: true})serverData.roles
+        // }
     },
     async created() {
         this.chainTypes = this.$CONSTANTS.chainTypes
