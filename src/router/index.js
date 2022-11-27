@@ -25,6 +25,7 @@ const routes = [
     { path: '/dashboard', component: Dashboard, name: 'Dashboard', meta: { requiresLogin: true, title: 'Dashboard' } },
     { path: '/roles', component: Roles, name: 'Roles', meta: { requiresLogin: true, title: 'Assets Granted Roles' } },
     { path: '/server/:id', component: Server, name: 'Server', meta: { requiresLogin: true, title: 'Server' } },
+    { path: '/verify/:query', component: Verify, name: 'Verify', meta: { title: 'Verify' } }
 ]
 
 const router = new VueRouter({
@@ -43,7 +44,17 @@ router.afterEach((to, from, next) => {
   // Use next tick to handle router history correctly
   // see: https://github.com/vuejs/vue-router/issues/914#issuecomment-384477609
   Vue.nextTick(() => {
-    document.title = to.meta.title + TITLE;
+    if(to.name === 'Server') {
+      let servers = {}
+      for(let id in store.state.servers) {
+        let server = store.state.servers[id]
+        servers[`${server.id}`] = server.name
+      }
+      console.log(servers)
+      document.title = servers[to.params.id] + TITLE;
+    } else {
+      document.title = to.meta.title + TITLE;
+    } 
   })
 })
 

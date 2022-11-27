@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="flex flex-col h-full min-w-[900px]">
+        <Loader v-if="loading"></Loader>
+        <div v-else class="flex flex-col h-full min-w-[900px]">
             <!-- card -->
             <div class="mb-5 bg-white border rounded-lg shadow-md dark:bg-neutral-800 dark:border-neutral-700">
                 <div id="fullWidthTabContent" class="dark:border-neutral-600">
@@ -14,7 +15,7 @@
 
                                 <dd class="font-light text-neutral-500 dark:text-neutral-400"></dd>
                             </div>
-                            <div  class="flex flex-col justify-center items-end">
+                            <div v-if="serverData.active" class="flex flex-col justify-center items-end">
                                 <dt class="mb-4 text-3xl font-Allenoire font-extrabold allen-typo text-neutral-900 lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
                                     
                                 </dt>
@@ -46,7 +47,7 @@
                     </nav>
                     <!-- roles found -->
                     <div v-for="role in serverData.roles">
-                        <dl class="grid max-w-screen-2xl gap-4 p-1 mx-auto text-neutral-900 grid-cols-2 dark:text-white hover:bg-neutral-700 rounded-lg mt-2 mb-2">
+                        <dl v-if="criteriaArray.includes(role.id)" class="grid max-w-screen-2xl gap-4 p-1 mx-auto text-neutral-900 grid-cols-2 dark:text-white hover:bg-neutral-700 rounded-lg mt-2 mb-2">
                             <div class="flex grow flex-col items-left justify-center">
                                 <!-- <dt class="mb-2 text-3xl font-extrabold font-Allenoire allen-typo">{{ server.active ? 'Soulful Server' : '' }}</dt> -->
                                 <h1 class="m-3 text-2xl font-Allenoire font-extrabold allen-typo text-neutral-900 text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
@@ -66,7 +67,31 @@
                             </div> -->
                             <div v-if="role.id != serverData.id" class="flex flex-col items-end justify-center">
                                 <div @click="addRole(role)">
-                                    <SecondaryBtnVue class="m-2" size="text-sm" text="Add Role Criteria"></SecondaryBtnVue>
+                                    <SecondaryBtnVue class="m-2" size="text-sm" text="Edit Criteria"></SecondaryBtnVue>
+                                </div>
+                            </div>
+                        </dl> 
+                        <dl v-else class="grid max-w-screen-2xl gap-4 p-1 mx-auto text-neutral-900 grid-cols-2 dark:text-white hover:bg-neutral-700 rounded-lg mt-2 mb-2">
+                            <div class="flex grow flex-col items-left justify-center">
+                                <!-- <dt class="mb-2 text-3xl font-extrabold font-Allenoire allen-typo">{{ server.active ? 'Soulful Server' : '' }}</dt> -->
+                                <h1 class="m-3 text-2xl font-Allenoire font-extrabold allen-typo text-white">
+                                    {{ role.name }}
+                                </h1>
+                                <!-- <h1 v-else class="m-4 text-2xl font-Allenoire font-extrabold allen-typo text-white">
+                                    {{ server.name }}
+                                </h1> -->
+
+                                <dd class="font-light text-neutral-500 dark:text-neutral-400"></dd>
+                            </div>
+                            <!-- <div class="flex flex-col items-center justify-center">
+                                <dt v-if="server.active" class="mb-4 text-3xl font-Allenoire font-extrabold allen-typo text-neutral-900 lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
+                                    {{ activeServersCount }}
+                                </dt>
+                                <dd v-if="server.active" class="font-light text-neutral-500 dark:text-neutral-400">Assets Granted Roles</dd>
+                            </div> -->
+                            <div v-if="role.id != serverData.id" class="flex flex-col items-end justify-center">
+                                <div @click="addRole(role)">
+                                    <Button class="m-2" size="text-sm" text="Add Role Criteria"></Button>
                                 </div>
                             </div>
                         </dl> 
@@ -210,7 +235,8 @@
 
 <script>
 import Button from '@/components/Button.vue'
-import SecondaryBtnVue from '../components/SecondaryBtn.vue'
+import SecondaryBtnVue from '@/components/SecondaryBtn.vue'
+import Loader from '@/components/Loader.vue'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
 export default {
@@ -226,12 +252,15 @@ export default {
                 minAmount: 0,
                 maxAmount: 0,
                 description: 'gfgf',
-            }
+            },
+            guildCriteria: undefined,
+            loading: true
         }
     },
     components: {
         Button,
-        SecondaryBtnVue
+        SecondaryBtnVue,
+        Loader
     },
     methods: {
         addBot() {
@@ -258,8 +287,10 @@ export default {
                     roleId: this.modalRole.id,
                     criteria: JSON.stringify(this.criteria)
                 }
-            })
-            console.log(resp)
+            }).finally(
+                this.loading = false
+            )
+            
         }
     },
     computed: {
@@ -274,6 +305,9 @@ export default {
         },
         criteriaValid() {
             return this.criteria.contractAddress.length == 42
+        },
+        criteriaArray() {
+            return Object.keys(this.guildCriteria)
         }
     },
     async created() {
@@ -282,12 +316,17 @@ export default {
         this.serverData = this.servers.find((e, index) => {
             return e.id === this.$route.params.id
         })
-        const roles = await axios.get('/api/server/getAllRoles', {
+        // await axios.get('/api/server/getAllRoles', {
+        //     params: {
+        //         id: this.$store.state.discordId
+        //     }
+        // })
+        this.guildCriteria = (await axios.get('/api/criteria/getGuildCriteria', {
             params: {
-                id: this.$store.state.discordId
+                guildId: this.serverData.id
             }
-        })
-
+        })).data.guildCriteria
+        this.loading = false
     }
 }
 </script>

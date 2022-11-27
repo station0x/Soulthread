@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.1",
+    "@jsonurl/jsonurl": "^1.1.7",
     "array-sort": "^1.0.0",
     "axios": "^1.2.0",
     "discord.js": "^14.6.0",
     "flowbite": "^1.5.4",
     "json-url": "^3.0.0",
     "mongodb": "^4.12.0",
+    "url-safe-base64": "^1.2.0",
     "vue": "^2.7.7",
     "vue-router": "^3.5.3",
     "vuex": "^3.6.2"

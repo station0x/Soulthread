@@ -16,7 +16,6 @@ export default new Vuex.Store({
             state.discordAvatar = avatar
         },
         setServers(state, servers) {
-            console.log(servers)
             state.servers = servers
         }
     },
