@@ -28,6 +28,7 @@ module.exports = async (req, res) => {
                     'Accept-Encoding': 'gzip: false' 
                 }
             })
+            console.log(botServers, userServers)
 
             const activeBotServers = botServers.data.map((e, index) => {
                 let oldE = e.id
