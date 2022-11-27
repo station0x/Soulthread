@@ -30,7 +30,7 @@
             </div>
         </div>
         
-        <div class="mb-5 bg-white border rounded-lg shadow-md dark:bg-neutral-800 dark:border-neutral-700">
+        <div v-if="servers" class="mb-5 bg-white border rounded-lg shadow-md dark:bg-neutral-800 dark:border-neutral-700">
             <div id="fullWidthTabContent" class="dark:border-neutral-600">
                 <div class="p-4 pb-0 bg-white rounded-lg md:p-4 md:pb-0 dark:bg-neutral-800" id="stats" role="tabpanel" aria-labelledby="stats-tab">
                     <!-- Breadcrumb -->
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div> -->
-        <div v-if="activeServersCount < 1" class="grow border rounded-lg max-h-[500px] shadow-md dark:bg-neutral-800 dark:border-neutral-700 no-servers">
+        <div v-if="serversCount < 1" class="grow border rounded-lg max-h-[500px] shadow-md dark:bg-neutral-800 dark:border-neutral-700 no-servers">
             <div id="fullWidthTabContent" class="dark:border-neutral-600">
                 <div class="p-4 rounded-lg md:p-8 " id="stats" role="tabpanel" aria-labelledby="stats-tab">
                     <dl class="grid max-w-screen-xl gap-2 p-4 mx-auto text-neutral-900 grid-cols-6 dark:text-white sm:p-8">
@@ -149,10 +149,15 @@ export default {
             servers: 'getMyServers',
             allServers: 'getAllServers'
         }),
+        serversCount() {
+            return this.servers ? this.servers.filter((e, i)=> {
+                return e
+            }).length : 0
+        },
         activeServersCount() {
             return this.servers ? this.servers.filter((e, i)=> {
                 return e.active
-            }).length : 0 
+            }).length : 0
         }
     }
 }

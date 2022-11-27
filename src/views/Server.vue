@@ -19,7 +19,7 @@
                                 <dt class="mb-4 text-3xl font-Allenoire font-extrabold allen-typo text-neutral-900 lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
                                     
                                 </dt>
-                                <dd class="font-light text-neutral-500 dark:text-neutral-400"> 10 Tokenized Roles</dd>
+                                <dd class="font-light text-neutral-500 dark:text-neutral-400"> {{ criteriaArray.length }} Roles Criteria</dd>
                             </div>
                             <div v-if="!serverData.active" :class="serverData.active ? 'items-center' : 'items-end'" class="flex flex-col justify-center">
                                 <div @click="addBot">

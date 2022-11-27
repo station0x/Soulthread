@@ -22,27 +22,32 @@ module.exports = async (req, res) => {
                     'Accept-Encoding': 'gzip: false' 
                 }
             })
+            console.log('==================================================')
+            console.log(botServers.data)
             const userServers = await axios.get(`${process.env.DISCORD_API}/users/@me/guilds`, {
                 headers: {
                     'Authorization': `Bearer ${ModDoc.access_token}`,
                     'Accept-Encoding': 'gzip: false' 
                 }
             })
-            console.log(botServers, userServers)
+            // console.log(botServers, userServers)
 
-            const activeBotServers = botServers.data.map((e, index) => {
-                let oldE = e.id
-                let activeServer = userServers.data.map((e, index) => {
-                    if(e.id === oldE) {
-                        e.active = true
-                    } else e.active = false
-                    return e
-                })
-                return activeServer
+            let botServersIds = botServers.data.map((e, i) => {
+                return e.id
             })
+            let activeBotServers = userServers.data.map((e, i) => {
+                if(botServersIds.includes(e.id)) {
+                    e.active = true
+                } else {
+                    e.active = false
+                }
+                return e
+            })
+            console.log('/////////////////////////////////////////////////////////////////////////////////////////////////////////')
+            console.log(activeBotServers)
 
             let userActiveServers = {}
-            activeBotServers[0].map((e, index) => {
+            activeBotServers.map((e, index) => {
                 if(e.active) {
                     e.roles = []
                     userActiveServers[`${e.id}`] = e
@@ -60,13 +65,14 @@ module.exports = async (req, res) => {
                 } catch(err) { console.log(err) }
                 console.log(server)
             }
+            console.log('#############################################################')
             console.log(userActiveServers)
             // console.log(userActiveServers)
             // console.log(Object.keys(userActiveServers).length)
             if(Object.keys(userActiveServers).length > 0) {
                 newModDoc.servers = userActiveServers
             }
-            console.log(newModDoc)
+            // console.log(newModDoc)
             await Mods.updateOne({_id:newModDoc._id}, {
                 $set:newModDoc
             })
