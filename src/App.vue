@@ -36,8 +36,8 @@
                         <ul class="py-2 space-y-2" :class="myServersHidden ? 'hidden' : ''">
                             <li :class="server.active ? 'dark:hover:text-black' : 'opacity-50'" class="flex rounded-lg hover:opacity-100 group hover:bg-neutral-100 dark:hover:bg-neutral-700 pl-2 pr-2" v-for="server in myServers" @click.prevent="openServer(server.id)">
                                 <img class="w-6 h-6 rounded-full sm:mr-3 align-middle self-center" :src="server.icon === null ? 'https://ia803204.us.archive.org/4/items/discordprofilepictures/discordblue.png' : `https://cdn.discordapp.com/icons/${server.id}/${server.icon}.png`" alt="Helene avatar">
-                                <a href="#" class="flex items-center w-full p-2 pl-1 text-base font-normal text-neutral-900 transition duration-75  dark:text-white">{{ server.name.length > 15 ? server.name.slice(0,15) + '...' : server.name }}</a>
-                                <span v-if="server.active" class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-neutral-800 bg-neutral-200 rounded-full dark:bg-neutral-700 dark:text-st-green h-6 mt-2">Active</span>
+                                <a href="#" class="flex items-center w-full p-2 pl-1 text-base font-normal text-neutral-900 transition duration-75  dark:text-white">{{ server.name.length > 13 ? server.name.slice(0,13) + '..' : server.name }}</a>
+                                <span v-if="server.active" class="inline-flex items-center justify-center px-2 ml-2 text-sm font-medium text-neutral-800 bg-neutral-200 rounded-full dark:bg-neutral-700 dark:text-st-green h-6 mt-2">Active</span>
                             </li>
                         </ul>
                     </li>
@@ -54,12 +54,6 @@
                         <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-neutral-500 transition duration-75 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Inbox</span>
                         <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-neutral-600 bg-neutral-200 rounded-full dark:bg-neutral-900 dark:text-neutral-200">3</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-base font-normal text-neutral-900 rounded-lg dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700">
-                        <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-neutral-500 transition duration-75 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">My Servers</span>
                         </a>
                     </li>
                 </ul>
@@ -83,8 +77,8 @@
                         <ul class="py-2 space-y-2" :class="allServersHidden ? 'hidden' : ''">
                             <li :class="server.active ? 'dark:hover:text-black' : 'opacity-50'" class="flex rounded-lg hover:opacity-100 group hover:bg-neutral-100 dark:hover:bg-neutral-700 pl-2 pr-2" v-for="server in allServers">
                                 <img class="w-6 h-6 rounded-full sm:mr-3 align-middle self-center" :src="server.icon === null ? 'https://ia803204.us.archive.org/4/items/discordprofilepictures/discordblue.png' : `https://cdn.discordapp.com/icons/${server.id}/${server.icon}.png`" alt="Helene avatar">
-                                <a href="#" class="flex items-center w-full p-2 pl-1 text-base font-normal text-neutral-900 transition duration-75  dark:text-white">{{ server.name.length > 15 ? server.name.slice(0,15) + '...' : server.name }}</a>
-                                <span v-if="server.active" class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-neutral-800 bg-neutral-200 rounded-full dark:bg-neutral-700 dark:text-st-green h-6 mt-2">Active</span>
+                                <a href="#" class="flex items-center w-full p-2 pl-1 text-base font-normal text-neutral-900 transition duration-75  dark:text-white">{{ server.name.length > 13 ? server.name.slice(0,13) + '..' : server.name }}</a>
+                                <span v-if="server.active" class="inline-flex items-center justify-center px-2 ml-2 text-sm font-medium text-neutral-800 bg-neutral-200 rounded-full dark:bg-neutral-700 dark:text-st-green h-6 mt-2">Active</span>
                             </li>
                         </ul>
                     </li>
@@ -140,7 +134,8 @@ export default {
                     params: {
                         id: this.$store.state.discordId
                     }
-                })).data.servers[0]
+                })).data.servers
+                console.log(servers)
                 this.$store.commit('setServers', arraySort(servers, 'active', {reverse: true}))
             }
         }, 
