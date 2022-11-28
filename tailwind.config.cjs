@@ -16,7 +16,9 @@ module.exports = {
       colors: {
         st: {
           green: '#01E898',
-          sky: '#13B1E8'
+          sky: '#13B1E8',
+          black: '#0D0D0D',
+          gray: '#171717'
         }
       }
     },
