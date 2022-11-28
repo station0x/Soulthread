@@ -66,7 +66,7 @@
                                 <dd v-if="server.active" class="font-light text-neutral-500 dark:text-neutral-400">Assets Granted Roles</dd>
                             </div> -->
                             <div v-if="role.id != serverData.id" class="flex flex-col items-end justify-center">
-                                <div @click="addRole(role)">
+                                <div @click="editRole(role)">
                                     <SecondaryBtnVue class="m-2" size="text-sm" text="Edit Criteria"></SecondaryBtnVue>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
                     <!-- Modal header -->
                     <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-neutral-600">
                         <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
-                            Create Role Criteria (for {{ modalRole.name }})
+                            {{ criteriaArray.includes(modalRole.id) ? 'Edit' : 'Create' }} Role Criteria (for {{ modalRole.name }})
                         </h3>
                         <button @click="closeModal()" class="text-neutral-400 bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-600 dark:hover:text-white" data-modal-toggle="updateUserModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -169,8 +169,8 @@
                                 <label for="user-permissions" class="inline-flexitems-center mb-2 text-sm font-medium text-neutral-900 dark:text-white">
                                     Chain Type
                                 </label>
-                                <select :value="$CONSTANTS.ENUM.chains[criteria.chainType]" @change="(e) => {criteria.chainType = e.target.value }" id="user-permissions" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
-                                    <option v-for="chain in chainTypes" >{{ $CONSTANTS.ENUM.chains[chain] }}</option>
+                                <select :value="$CONSTANTS.ENUM.chains[criteria.chainType].chainName" @change="(e) => {criteria.chainType = e.target.value }" id="user-permissions" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
+                                    <option v-for="chain in chainTypes" >{{ $CONSTANTS.ENUM.chains[chain].chainName }}</option>
                                 </select>
                             </div>
                             <div>
@@ -215,8 +215,15 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-4 mt-10">
-                            <button @click.prevent="addCriteria" :class="criteriaValid ? 'opacity: 100':'opacity: 50'" class="text-black bg-st-green hover:bg-st-green focus:ring-4 focus:outline-none focus:ring-st-green font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-tr from-st-green to-st-sky dark:hover:bg-st-green dark:focus:ring-st-green">
-                                <svg v-if="btnLoader"  aria-hidden="true" role="status" class="inline mr-2 -mt-[0.5px] w-4 h-4 text-black animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <button v-if="criteriaArray.includes(modalRole.id)" @click.prevent="editCriteria" :class="criteriaValid ? 'opacity: 100':'opacity: 50'" class="text-black bg-st-green hover:bg-st-green focus:ring-4 focus:outline-none focus:ring-st-green font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-tr from-st-green to-st-sky dark:hover:bg-st-green dark:focus:ring-st-green">
+                                <svg v-if="btnLoader" aria-hidden="true" role="status" class="inline mr-2 -mt-[0.5px] w-4 h-4 text-black animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="gray"/>
+                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+                                </svg>
+                                {{ btnLoader ? 'Editing..' : 'Edit Criteria' }}
+                            </button>
+                            <button v-else @click.prevent="addCriteria" :class="criteriaValid ? 'opacity: 100':'opacity: 50'" class="text-black bg-st-green hover:bg-st-green focus:ring-4 focus:outline-none focus:ring-st-green font-bold rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-tr from-st-green to-st-sky dark:hover:bg-st-green dark:focus:ring-st-green">
+                                <svg v-if="btnLoader" aria-hidden="true" role="status" class="inline mr-2 -mt-[0.5px] w-4 h-4 text-black animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="gray"/>
                                 <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
                                 </svg>
@@ -246,9 +253,9 @@ export default {
             criteria: {
                 chainType: 0,
                 tokenStandard: 0,
-                contractAddress: 'hello',
+                contractAddress: '0x',
                 minAmount: 0,
-                description: 'gfgf',
+                description: '',
             },
             guildCriteria: undefined,
             loading: true,
@@ -262,24 +269,46 @@ export default {
     },
     methods: {
         addBot() {
-            console.log('ldfskl;dlf')
             window.open('https://discord.com/api/oauth2/authorize?client_id=1044688147902120089&permissions=8&scope=bot','_blank')
         },
         addRole(role) {
             this.modalRole = role
             this.modalUp = true
         },
+        editRole(role) {
+            this.criteria = {...this.guildCriteria[role.id]}
+            this.modalRole = role
+            this.modalUp = true
+        },
         closeModal() {
+            this.criteria = {
+                chainType: 0,
+                tokenStandard: 0,
+                contractAddress: '0x',
+                minAmount: 0,
+                description: '',
+            }
             this.modalUp = false
             this.modalRole = undefined
         },
         async addCriteria() {
             this.btnLoader = true
-            // let criteria = {...this.criteria}
-            // criteria.chainType = this.$CONSTANTS.ENUM.chains[this.criteria.chainType]
-            // criteria.tokenStandard = this.$CONSTANTS.ENUM.standards[this.criteria.tokenStandard]
-            console.log(this.criteria)
             await axios.get('/api/criteria/add', {
+                params: {
+                    modId: this.$store.state.discordId,
+                    guildId: this.serverData.id,
+                    roleId: this.modalRole.id,
+                    criteria: JSON.stringify(this.criteria)
+                }
+            })    
+            this.modalUp = false
+            this.loading = false
+            this.btnLoader = false
+            this.getGuildCriteria()
+        },
+        async editCriteria() {
+            this.btnLoader = true
+            await axios.get('/api/criteria/edit', {
                 params: {
                     modId: this.$store.state.discordId,
                     guildId: this.serverData.id,

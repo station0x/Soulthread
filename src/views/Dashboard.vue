@@ -48,10 +48,10 @@
                         <dl class="grid max-w-screen-2xl gap-4 p-1 mx-auto text-neutral-900 grid-cols-3 dark:text-white sm:p-8 pb-4 hover:bg-neutral-700 rounded-lg mt-2 mb-2">
                             <div class="flex grow flex-col items-left justify-center">
                                 <!-- <dt class="mb-2 text-3xl font-extrabold font-Allenoire allen-typo">{{ server.active ? 'Soulful Server' : '' }}</dt> -->
-                                <h1 v-if="server.active" class="m-4 text-2xl font-Allenoire font-extrabold allen-typo text-neutral-900 text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
+                                <h1 v-if="server.active" class="m-4 text-2xl font-extrabold text-neutral-900 text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
                                     {{ server.name }}
                                 </h1>
-                                <h1 v-else class="m-4 text-2xl font-Allenoire font-extrabold allen-typo text-white">
+                                <h1 v-else class="m-4 text-2xl font-extrabold text-white">
                                     {{ server.name }}
                                 </h1>
 
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div> -->
-        <div v-if="serversCount < 1" class="grow border rounded-lg max-h-[500px] shadow-md dark:bg-neutral-800 dark:border-neutral-700 no-servers">
+        <div  class="grow border rounded-lg max-h-[500px] shadow-md dark:bg-neutral-800 dark:border-neutral-700 no-servers">
             <div id="fullWidthTabContent" class="dark:border-neutral-600">
                 <div class="p-4 rounded-lg md:p-8 " id="stats" role="tabpanel" aria-labelledby="stats-tab">
                     <dl class="grid max-w-screen-xl gap-2 p-4 mx-auto text-neutral-900 grid-cols-6 dark:text-white sm:p-8">
@@ -115,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <div v-else>
+        <div >
 
         </div>
     </div>

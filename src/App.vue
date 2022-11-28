@@ -91,7 +91,7 @@
                 </ul>
             </div>
         </div>
-        <div class="grow p-10 flex justify-center">
+        <div class="grow p-0 h-screen flex justify-center md:p-10">
           <router-view :key="$route.fullPath"></router-view>
         </div>
       </div>

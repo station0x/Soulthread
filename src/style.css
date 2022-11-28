@@ -2,9 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Urbanist:ital@1&display=swap');
 @font-face {
   font-family: 'Allenoire';
-  src: url('/fonts/allenoire/Allenoire-font.otf') format("opentype");
-  -webkit-font-smoothing: antialiased;
+  src: url('/fonts/allenoire/Allenoire-Regular.eot');
+  src: local('/fonts/allenoire/Allenoire Regular'), local('Allenoire-Regular'),
+      url('/fonts/allenoire/Allenoire-Regular.eot?#iefix') format('embedded-opentype'),
+      url('/fonts/allenoire/Allenoire-Regular.woff2') format('woff2'),
+      url('/fonts/allenoire/Allenoire-Regular.woff') format('woff'),
+      url('/fonts/allenoire/Allenoire-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
+
 /* tailwind base styles */
 @tailwind base;
 @tailwind components;
@@ -17,9 +25,15 @@ body {
 }
 
 .allen-typo {
-  letter-spacing: 0.04em;
+  font-family: 'Allenoire';
+  font-weight: normal;
+  font-style: normal;
 }
-
+.font-Allenoire {
+  font-family: 'Allenoire';
+  font-weight: normal;
+  font-style: normal;
+}
 /* body {
   font-family: 'Allenoire';
   letter-spacing: 0.04em;
