@@ -5,7 +5,7 @@
         <div>2</div> 
         <div>3</div>  -->
         <!-- drawer component -->
-        <div v-if="$store.state.discordId != null" id="drawer-navigation" class="z-40 custom-scroll shrink-0 h-screen p-4 overflow-y-auto bg-white w-[300px] dark:bg-neutral-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
+        <div v-if="$store.state.discordId != null && isApp" id="drawer-navigation" class="z-40 custom-scroll shrink-0 h-screen p-4 overflow-y-auto bg-white w-[300px] dark:bg-neutral-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
             <a href="/" class="flex items-center text-2xl font-semibold text-white">
                 <img class="w-[140px]" src="/img/logo.svg" />
             </a>
@@ -41,21 +41,21 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a @click="$router.push({ name: 'Roles' })" class="flex cursor-pointer items-center p-2 text-base font-normal text-neutral-900 rounded-lg dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700">
                         <svg class="flex-shrink-0 w-6 h-6 text-neutral-500 transition duration-75 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Assets Granted Roles</span>
                         <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-neutral-800 bg-neutral-200 rounded-full dark:bg-neutral-700 dark:text-neutral-300">Pro</span>
                         </a>
-                    </li>
-                    <div class="w-44 bg-white rounded divide-y divide-neutral-100 shadow dark:bg-neutral-700 dark:divide-neutral-600"></div>
+                    </li> -->
+                    <!-- <div class="w-44 bg-white rounded divide-y divide-neutral-100 shadow dark:bg-neutral-700 dark:divide-neutral-600"></div>
                     <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-neutral-900 rounded-lg dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700">
                         <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-neutral-500 transition duration-75 dark:text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Inbox</span>
                         <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-neutral-600 bg-neutral-200 rounded-full dark:bg-neutral-900 dark:text-neutral-200">3</span>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
                 <ul class="pt-4 mt-4 space-y-2 border-t border-neutral-200 dark:border-neutral-700">
                     <li>
@@ -106,7 +106,8 @@ export default {
     data() {
         return {
             allServersHidden: true,
-            myServersHidden: false
+            myServersHidden: false,
+            isApp: false
         }
     },
     methods: {
@@ -129,6 +130,7 @@ export default {
     async created() {
         setTimeout(async () => {
             if(this.$router.history.current.name !== 'Verify') {
+                this.isApp = true
                 if(this.$store.state.discordId) this.$router.push({ name: 'Dashboard' })
                 let servers = (await axios.get('/api/bot/getBotServers', {
                     params: {

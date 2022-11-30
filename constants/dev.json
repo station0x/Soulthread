@@ -14,10 +14,14 @@
                 "chainName":"Fantom Opera",
                 "chainExplorer":"https://ftmscan.com/"
             }
-
         },
         "standards": {
-            "0": "ERC-20"
+            "0": {
+                "name": "ERC-20",
+                "ABI": {
+                    "balanceOf": "function balanceOf(address) view returns (uint)"
+                }
+            }
         }
     }
 }
