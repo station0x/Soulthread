@@ -22,14 +22,14 @@
                             {{ headerText }}
                         </h1>
                         <p v-if="!finished" class="mb-4 font-light text-neutral-500 dark:text-neutral-400 md:mb-6"> {{ passed > 0 ? 'You can now go back to discord to enjoy your new granted roles.' : 'Sign this message to verify your assets for granting discord roles.' }}</p>
-                        <p v-else class="mb-4 font-light text-neutral-500 dark:text-neutral-400 md:mb-6"> {{ passed > 0 ? 'You can now go back to discord to enjoy your new granted roles.' : 'Unfortunately, we could not verify you the have the requied assets for discord roles.' }}</p>
+                        <p v-else class="mb-4 font-light text-neutral-500 dark:text-neutral-400 md:mb-6"> {{ passed > 0 ? 'You can now go back to discord to enjoy your new granted roles.' : 'Unfortunately, we could not verify you the have the required assets for discord roles.' }}</p>
 
                         <div v-if="!this.finished" class="flex gap-10 my-10">
                             <div class="flex cursor-pointer w-90 h-90 items-center after:font-light after:text-neutral-200">
                                 <div class="w-full max-w-sm bg-white border border-neutral-200 rounded-lg dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:border-neutral-700">
                                     <div @click="connectMetamask" class="flex flex-col items-center pb-4 px-2">
                                         <img v-if="!mmLoader" class="w-20 h-20 mt-5" src="/img/metamask-fox.svg"/>
-                                        <svg v-else aria-hidden="true" role="status" :class="verifying ? 'text-[#01E898]' : 'text-[#F6851B]'" class="inline mt-9 mb-6 w-10 h-10 text-[#F6851B] animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg v-else aria-hidden="true" role="status" :class="verifying ? 'text-[#01E898]' : 'text-[#F6851B]'" class="inline mt-9 mb-6 w-10 h-10 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="rgba(255,255,255,.125)"/>
                                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
                                         </svg>
@@ -81,6 +81,7 @@ export default {
     data() { 
         return {
             query: undefined,
+            queryRaw: undefined,
             mmLoader: false,
             verifying: false,
             roles: undefined,
@@ -108,6 +109,7 @@ export default {
                         roleId: this.query.roleId,
                         signature,
                         address,
+                        queryRaw: this.queryRaw,
                         // signing message
                         guildName: this.query.guildName,
                         timestamp: this.query.timestamp,
@@ -122,7 +124,7 @@ export default {
                         this.start()
                         setTimeout(() => {
                             this.stop()
-                        }, 1500)
+                        }, 3000)
                     }
                 })
             } catch(err) {
@@ -158,8 +160,8 @@ export default {
         }
     },
     async created() {
-        let query = this.$route.params.query
-        let decoded = decode(query)
+        this.queryRaw = this.$route.params.query
+        let decoded = decode(this.queryRaw)
         let parsed = JsonURL.parse(decoded)
         this.query = parsed
     }

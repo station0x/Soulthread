@@ -12,7 +12,8 @@ module.exports = async (req, res) => {
         guildName,
         interactionId,
         timestamp,
-        username
+        username,
+        queryRaw
     } = req.query
     const address = getAddress(req.query.signature, guildName, username, timestamp, interactionId)
     // if(address !== req.query.address) throw new Error('Signature not valid')
@@ -44,7 +45,25 @@ module.exports = async (req, res) => {
         console.log(Number.parseInt(p.balance), p.minAmount, p.roleId)
         if(Number.parseInt(p.balance) >= p.minAmount) rolesPassed.push(p.roleId)
     }
-    // let criteria = guildDoc.criteria[`${roleId}`]
-    // console.log(criteria, address, req.query.address)
+
+    let userHash = require('crypto').createHash('sha256').update(queryRaw).digest("hex")
+    const verifiedMembers = db.collection("verifiedMembers")
+    const userDoc = (await verifiedMembers.find({userId}).limit(1).toArray())[0]
+    if(!userDoc) {
+        await verifiedMembers.insertOne({
+            id: userHash,
+            userId,
+            rolesPassed,
+            timestamp: Date.now()
+        })
+    } else {
+        let newRecord = {...userDoc}
+        newRecord.userHash = userHash,
+        newRecord.rolesPassed = rolesPassed
+        newRecord.timestamp = Date.now()
+        await verifiedMembers.updateOne({id: userHash}, {
+            $set:newRecord
+        })
+    }
     res.status(200).json({ success: true, rolesPassed })
 }
