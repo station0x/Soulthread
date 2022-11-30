@@ -10,6 +10,7 @@ function isGuildOwned(guilds, guildId) {
 module.exports = async (req, res) => {
     let { modId, guildId, roleId, criteria } = req.query
     criteria = JSON.parse(criteria)
+    criteria.description = criteria.description.split('+').join(' ')
     console.log(modId, typeof guildId, roleId, criteria)
     if(!modId) throw new Error('User id not provided')
     const client = await clientPromise;

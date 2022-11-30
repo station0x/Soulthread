@@ -53,6 +53,9 @@
                                 <h1 class="m-3 text-2xl font-Allenoire font-extrabold allen-typo text-neutral-900 text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
                                     {{ role.name }}
                                 </h1>
+                                <h1 class="-mt-3 whitespace-nowrap ml-3 pb-3 text-md text-sm font-light text-white">
+                                    {{ guildCriteria[role.id].description.length > 70 ? guildCriteria[role.id].description.slice(0,70) + '..' : guildCriteria[role.id].description }}
+                                </h1>
                                 <!-- <h1 v-else class="m-4 text-2xl font-Allenoire font-extrabold allen-typo text-white">
                                     {{ server.name }}
                                 </h1> -->
@@ -177,8 +180,8 @@
                                 <label for="user-permissions" class="inline-flexitems-center mb-2 text-sm font-medium text-neutral-900 dark:text-white">
                                     Token Standard
                                 </label>
-                                <select :value="$CONSTANTS.ENUM.standards[criteria.tokenStandard]" @change="(e) => {criteria.tokenStandard = e.target.value }" id="user-permissions" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
-                                    <option v-for="standard in tokenStandards" >{{ $CONSTANTS.ENUM.standards[standard] }}</option>
+                                <select :value="$CONSTANTS.ENUM.standards[criteria.tokenStandard].name" @change="(e) => {criteria.tokenStandard = e.target.value }" id="user-permissions" class="bg-neutral-50 border border-neutral-300 text-neutral-900 text-sm rounded-lg focus:ring-st-green focus:border-st-green block w-full p-2.5 dark:bg-neutral-700 dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white dark:focus:ring-st-green dark:focus:border-st-green" required="">
+                                    <option v-for="standard in tokenStandards" >{{ $CONSTANTS.ENUM.standards[standard].name }}</option>
                                 </select>
                             </div>
                         </div>
