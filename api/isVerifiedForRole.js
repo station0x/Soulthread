@@ -11,5 +11,5 @@ module.exports = async (req, res) => {
     const verifiedMembers = db.collection("verifiedMembers")
     const userDoc = (await verifiedMembers.find({id: userHash}).limit(1).toArray())[0]
     if(userDoc) res.status(200).json({ rolesPassed: userDoc.rolesPassed });
-    else throw new Error("User verification record does not exist")
+    else res.status(200).json({ rolesPassed: null });
 }

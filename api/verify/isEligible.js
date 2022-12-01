@@ -40,15 +40,18 @@ module.exports = async (req, res) => {
         }
         // console.log(assetBalance)
     })
-
+    console.log('=============')
     for await (const p of balances) {
         console.log(Number.parseInt(p.balance), p.minAmount, p.roleId)
-        if(Number.parseInt(p.balance) >= p.minAmount) rolesPassed.push(p.roleId)
+        if(p.balance) {
+            if(Number.parseInt(p.balance) >= p.minAmount) rolesPassed.push(p.roleId)
+        }
     }
 
     let userHash = require('crypto').createHash('sha256').update(queryRaw).digest("hex")
     const verifiedMembers = db.collection("verifiedMembers")
     const userDoc = (await verifiedMembers.find({userId}).limit(1).toArray())[0]
+    console.log(userDoc)
     if(!userDoc) {
         await verifiedMembers.insertOne({
             id: userHash,
@@ -58,7 +61,7 @@ module.exports = async (req, res) => {
         })
     } else {
         let newRecord = {...userDoc}
-        newRecord.userHash = userHash,
+        newRecord.id = userHash,
         newRecord.rolesPassed = rolesPassed
         newRecord.timestamp = Date.now()
         await verifiedMembers.updateOne({id: userHash}, {
