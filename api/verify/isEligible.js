@@ -40,7 +40,6 @@ module.exports = async (req, res) => {
         }
         // console.log(assetBalance)
     })
-    console.log('=============')
     for await (const p of balances) {
         console.log(Number.parseInt(p.balance), p.minAmount, p.roleId)
         if(p.balance) {
@@ -61,7 +60,7 @@ module.exports = async (req, res) => {
         })
     } else {
         let newRecord = {...userDoc}
-        newRecord.id = userHash,
+        newRecord.userHash = userHash,
         newRecord.rolesPassed = rolesPassed
         newRecord.timestamp = Date.now()
         await verifiedMembers.updateOne({id: userHash}, {
