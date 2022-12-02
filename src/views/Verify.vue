@@ -93,7 +93,7 @@ export default {
     },
     methods: {
         async connectMetamask() {
-            const message = `SoulThread (https://soulthread.xyz) asks you to sign this message for the purpose of verifying your account ownership. This is READ-ONLY access and will NOT trigger any blockchain transactions or incur any fees. \n\n- Community: ${this.query.guildName} \n- User: ${this.query.user} \n- Discord Interaction: ${this.query.interactionId} \n- Timestamp: ${this.query.timestamp} \n`
+            const message = `SoulThread (https://soulthread.xyz) requires verification of account ownership.\n\n Username: ${this.query.user} \n Server Name: ${this.query.guildName} \n Interaction ID: ${this.query.interactionId} \n Raw Timestamp: ${this.query.timestamp} \n\nThis Soul Bond (message) is READ-ONLY access and has NO GAS FEE associated with it. Please sign this Soul Bond (message) to verify with SoulThread`
             this.mmLoader = true   
             const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
             const signer = provider.getSigner()
