@@ -12,8 +12,7 @@ module.exports = async (req, res) => {
         guildName,
         interactionId,
         timestamp,
-        username,
-        queryRaw
+        username
     } = req.query
     const address = getAddress(req.query.signature, guildName, username, timestamp, interactionId)
     // if(address !== req.query.address) throw new Error('Signature not valid')
@@ -47,23 +46,22 @@ module.exports = async (req, res) => {
         }
     }
 
-    let userHash = require('crypto').createHash('sha256').update(queryRaw).digest("hex")
+    let userHash = require('crypto').createHash('sha256').update(`${userId}${guildId}`).digest("hex")
     const verifiedMembers = db.collection("verifiedMembers")
-    const userDoc = (await verifiedMembers.find({userId}).limit(1).toArray())[0]
+    const userDoc = (await verifiedMembers.find({userHash}).limit(1).toArray())[0]
     console.log(userDoc)
     if(!userDoc) {
         await verifiedMembers.insertOne({
-            id: userHash,
+            userHash,
             userId,
             rolesPassed,
             timestamp: Date.now()
         })
     } else {
         let newRecord = {...userDoc}
-        newRecord.userHash = userHash,
         newRecord.rolesPassed = rolesPassed
         newRecord.timestamp = Date.now()
-        await verifiedMembers.updateOne({id: userHash}, {
+        await verifiedMembers.updateOne({userHash}, {
             $set:newRecord
         })
     }

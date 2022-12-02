@@ -109,7 +109,6 @@ export default {
                         roleId: this.query.roleId,
                         signature,
                         address,
-                        queryRaw: this.queryRaw,
                         // signing message
                         guildName: this.query.guildName,
                         timestamp: this.query.timestamp,
