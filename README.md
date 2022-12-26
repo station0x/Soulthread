@@ -5,3 +5,8 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+# Installation
+1. Make sure yarn is installed globally.
+2. Run `yarn install` in directory root.
+3. Run `yarn run vite` to start the development server.
