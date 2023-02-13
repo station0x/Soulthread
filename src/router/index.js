@@ -21,7 +21,7 @@ const TITLE = ' | Soulthread'
 const routes = [
     { path: '/', redirect: { name: 'Onboarding' }},
     { path: '*', redirect: { name: 'Onboarding' }},
-    { path: '/welcome/:user?', component: Onboarding, name: 'Onboarding', meta: { title: 'Welcome' } },
+    { path: '/welcome/:user?', component: Onboarding, name: 'Onboarding', meta: { title: 'Proof-of-Ownership Gatekeeping Bot for Discord' } },
     { path: '/dashboard', component: Dashboard, name: 'Dashboard', meta: { requiresLogin: true, title: 'Dashboard' } },
     { path: '/roles', component: Roles, name: 'Roles', meta: { requiresLogin: true, title: 'Assets Granted Roles' } },
     { path: '/server/:id', component: Server, name: 'Server', meta: { requiresLogin: true, title: 'Server' } },

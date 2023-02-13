@@ -1,11 +1,26 @@
 <template>
     <div id="app">
+        <div v-if="!this.$store.state.discordId" id="banner" tabindex="-1" class="flex z-50 justify-between py-4 px-4 w-full bg-neutral-50 border border-b border-neutral-200 dark:border-neutral-700 dark:bg-neutral-800">
+            <div class="flex items-center mx-auto">
+                <p class="text-sm font-medium text-neutral-900 text-transparent bg-clip-text bg-gradient-to-tr to-st-sky from-st-green">
+                    <!-- <span class="hidden md:inline-flex bg-primary-100 text-primary-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">New</span> -->
+                    SoulThread is a free & open-source project for Fantom community. We're accepting donations.
+                    <a @click="copyDonationAddr" class="inline-flex cursor-pointer text-white font-medium items-center ml-0 text-sm text-primary-600 md:ml-2 dark:text-primary-500 hover:underline">
+                        Copy Donation Address
+                        <svg class="ml-1 w-5 h-5 text-primary-600 dark:text-primary-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z"></path><path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"></path></svg>
+                    </a>
+                </p>
+            </div>
+            <!-- <button data-collapse-toggle="banner" type="button" class="inline-flex justify-center items-center text-neutral-400 hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 dark:hover:bg-neutral-600 dark:hover:text-white">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+            </button> -->
+        </div>
       <div class="flex flex-row">
         <!-- <div class="grow">1</div> 
         <div>2</div> 
         <div>3</div>  -->
         <!-- drawer component -->
-        <div v-if="$store.state.discordId != null && isApp" id="drawer-navigation" class="z-40 custom-scroll shrink-0 h-screen p-4 overflow-y-auto bg-white w-[300px] dark:bg-neutral-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
+        <div v-if="$store.state.discordId != null && isApp" id="drawer-navigation" class="z-40 custom-scroll shrink-0 h-screen p-4 overflow-y-auto bg-white w-[300px] dark:bg-neutral-800 border-r dark:border-neutral-700" tabindex="-1" aria-labelledby="drawer-navigation-label">
             <a href="/" class="flex items-center text-2xl font-semibold text-white">
                 <img class="w-[140px]" src="/img/logo.svg" />
             </a>
@@ -83,6 +98,12 @@
                         </ul>
                     </li>
                     <li>
+                        <a @click.prevent="copyDonationAddr" class="flex items-center cursor-pointer p-2 text-base font-normal text-neutral-900 rounded-lg transition duration-75 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:text-white group">
+                        <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-neutral-500 transition duration-75 group-hover:text-neutral-900 dark:group-hover:text-white dark:text-neutral-400"  fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z"></path><path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"></path></svg>
+                        <span class="ml-4">Copy Donation Address</span>
+                        </a>
+                    </li>
+                    <li>
                         <a @click.prevent="signout" class="flex items-center cursor-pointer p-2 text-base font-normal text-neutral-900 rounded-lg transition duration-75 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:text-white group">
                         <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-neutral-500 transition duration-75 group-hover:text-neutral-900 dark:group-hover:text-white dark:text-neutral-400"  fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                         <span class="ml-4">Sign out</span>
@@ -125,19 +146,30 @@ export default {
         },
         openServer(id) {
             this.$router.push({ name: 'Server', params: { id } }).catch();
+        },
+        async copyDonationAddr() {
+        try {
+            await navigator.clipboard.writeText('0x73657C5E273A19943f6f92Be41A1db9ecC12a016');
+            alert('Copied, thank you for your support!');
+        } catch(err) {
+            console.log(err)
         }
+    }
     },
     async created() {
         setTimeout(async () => {
             if(this.$router.history.current.name !== 'Verify') {
                 this.isApp = true
                 if(this.$store.state.discordId) this.$router.push({ name: 'Dashboard' })
-                let servers = (await axios.get('/api/bot/getBotServers', {
-                    params: {
-                        id: this.$store.state.discordId
-                    }
-                })).data.servers
-                console.log(servers)
+                if(this.$store.state.discordId){
+                    let servers = (await axios.get('/api/bot/getBotServers', {
+                        params: {
+                            id: this.$store.state.discordId
+                        }
+                    })).data.servers
+                    console.log(servers)
+                    this.$store.commit('setServers', arraySort(servers, 'active', {reverse: true}))
+                }
                 this.$store.commit('setServers', arraySort(servers, 'active', {reverse: true}))
             }
         }, 
