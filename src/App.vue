@@ -142,7 +142,6 @@ export default {
             }
         }, 
         300)
-
     },
     computed: {
         ...mapGetters({

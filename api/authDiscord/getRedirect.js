@@ -1,3 +1,6 @@
+"use strict";
+// Import the dependency.
+const clientPromise = require('../../api-utils/mongo-client');
 const axios = require('axios')
 const url = require("url")
 const codec = require('json-url')('lzw')
@@ -8,6 +11,10 @@ module.exports = async (req, res) => {
   console.log(req.query.code, process.env.DISCORD_CLIENT_ID, process.env.DISCORD_CLIENT_SECRET, host)
   const { code } = req.query
   if(code) {
+    const client = await clientPromise;
+    const db = client.db()
+    const Mods = db.collection("moderators")
+
     try {
       console.log('redirected......................')
       const formData = new url.URLSearchParams({
@@ -44,6 +51,17 @@ module.exports = async (req, res) => {
         })).data.success
         // returning user
         if(isRegistered) {
+          // update user tokens
+          const ModDoc = (await Mods.find({id}).limit(1).toArray())[0]
+          // if(ModDoc.access_token !== access_token || ModDoc.refresh_token !== refresh_token) {
+            await axios.get(`${host}/api/moderators/updateTokens`, {
+              params: {
+                id,
+                access_token,
+                refresh_token
+              }
+            })
+          // }
           codec.compress({
             id,
             username,
