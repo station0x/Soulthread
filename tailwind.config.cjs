@@ -1,29 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
   content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    './src/**/*.{js,jsx,ts,tsx}',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
-    fontFamily: {
-      sans: 
-      ['Inter', 'sans-serif'],
-      'Allenoire': ['Allenoire', 'sans-serif']
-    },
-    extend: {
-      colors: {
-        st: {
-          green: '#01E898',
-          sky: '#13B1E8',
-          black: '#0D0D0D',
-          gray: '#171717'
-        }
-      }
-    },
+    extend: {},
   },
   plugins: [
     require('flowbite/plugin')
-  ],
+  ]
 }

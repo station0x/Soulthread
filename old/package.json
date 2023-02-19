@@ -1,0 +1,39 @@
+{
+  "name": "soulthread",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "vercel-dev-helper": "vite --port $PORT",
+    "vdev": "vercel dev --local-config ./vercel-dev.json"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.20.1",
+    "@jsonurl/jsonurl": "^1.1.7",
+    "array-sort": "^1.0.0",
+    "axios": "^1.2.0",
+    "discord.js": "^14.6.0",
+    "ethers": "^5.5.1",
+    "flowbite": "^1.5.4",
+    "js-base64": "^3.7.3",
+    "json-url": "^3.0.0",
+    "mongodb": "^4.12.0",
+    "url-safe-base64": "^1.2.0",
+    "vue": "^2.7.7",
+    "vue-confetti": "^2.3.0",
+    "vue-router": "^3.5.3",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^2.0.0",
+    "@vitejs/plugin-vue2": "^1.1.2",
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.16",
+    "sass": "^1.54.5",
+    "sass-loader": "^13.0.2",
+    "tailwindcss": "^3.1.8",
+    "terser": "^5.14.2",
+    "vite": "^3.0.2"
+  }
+}

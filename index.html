@@ -3,21 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/img/icon.svg" />
-    <link rel="preload" href="/fonts/allenoire/Allenoire-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Soulthread</title>
+    <title>SoulThread | Proof-Of-Ownership Gatekeeping for Discord</title>
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      // if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      //     document.documentElement.classList.add('dark');
+      // } else {
+      //     document.documentElement.classList.remove('dark')
+      // }
+      document.documentElement.classList.add('dark');
+  </script>
   </head>
   <body>
-    <div id="app"></div>
-    <script>
-      document.documentElement.classList.add('dark');
-    </script>
-    <script type="module" src="/src/main.js"></script>
-    <!-- <script src="/js/flowbite.js" type="module"></script> -->
-    <script type="text/javascript" src="/js/json-url.js"></script>
-    <!-- <script>
-      const lib = JsonUrl('lzma'); // JsonUrl is added to the window object
-    </script> -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
