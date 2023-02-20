@@ -5,7 +5,7 @@ import { arbitrum, fantom } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const Chains = [fantom, mainnet, arbitrum]
+const Chains = [fantom, mainnet]
 
 const { chains, provider } = configureChains(
   Chains,
